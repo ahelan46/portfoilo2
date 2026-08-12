@@ -4,6 +4,7 @@ services:
     env: python
     plan: starter
     branch: main
+    rootDir: portfolio
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn mysite.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
