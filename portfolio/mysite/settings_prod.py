@@ -6,16 +6,17 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', SECRET_KEY)
 
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
-hosts = os.environ.get('DJANGO_ALLOWED_HOSTS', '')
-if hosts:
-    ALLOWED_HOSTS = [h.strip() for h in hosts.split(',') if h.strip()]
+# Allow hosts - default to all if not specified (Render requires this)
+hosts = os.environ.get('DJANGO_ALLOWED_HOSTS', '*')
+if hosts == '*':
+    ALLOWED_HOSTS = ['*']
 else:
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = [h.strip() for h in hosts.split(',') if h.strip()]
 
 # Security defaults
-SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'True') == 'True'
-SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'True') == 'True'
-CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', 'True') == 'True'
+SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'False') == 'True'
+SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'False') == 'True'
+CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', 'False') == 'True'
 X_FRAME_OPTIONS = 'DENY'
 
 # Use WhiteNoise for static file serving in production
