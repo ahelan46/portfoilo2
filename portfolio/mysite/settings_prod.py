@@ -23,9 +23,14 @@ X_FRAME_OPTIONS = 'DENY'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Allow additional trusted origins (comma-separated)
-trusted = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
+trusted = os.environ.get('CSRF_TRUSTED_ORIGINS', 'https://portfoilo1-api.onrender.com')
 if trusted:
     CSRF_TRUSTED_ORIGINS = [t.strip() for t in trusted.split(',') if t.strip()]
+
+# CORS for frontend (allow localhost for dev, add production URLs as needed)
+CORS_ALLOWED_ORIGINS_FROM_ENV = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173')
+if CORS_ALLOWED_ORIGINS_FROM_ENV:
+    CORS_ALLOWED_ORIGINS = [origin.strip() for origin in CORS_ALLOWED_ORIGINS_FROM_ENV.split(',') if origin.strip()]
 
 # Database from DATABASE_URL (Render managed Postgres or other URL)
 try:

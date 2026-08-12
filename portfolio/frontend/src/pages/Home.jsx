@@ -21,9 +21,10 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
         const [projectsRes, skillsRes] = await Promise.all([
-          fetch('http://localhost:8000/api/projects/'),
-          fetch('http://localhost:8000/api/skills/')
+          fetch(`${apiUrl}/api/projects/`),
+          fetch(`${apiUrl}/api/skills/`)
         ]);
         
         const projectsData = await projectsRes.json();
