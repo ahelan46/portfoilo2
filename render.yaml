@@ -5,7 +5,7 @@ services:
     plan: starter
     branch: main
     buildCommand: cd portfolio && pip install -r requirements.txt
-    startCommand: cd portfolio && gunicorn mysite.wsgi:application --bind 0.0.0.0:$PORT
+    startCommand: gunicorn --chdir portfolio mysite.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: mysite.settings_prod
@@ -13,8 +13,6 @@ services:
         value: 'False'
       - key: PYTHONUNBUFFERED
         value: '1'
-      - key: PYTHONPATH
-        value: /opt/render/project/src/portfolio
     postDeploy:
       - command: cd portfolio && python manage.py migrate
       - command: cd portfolio && python manage.py collectstatic --noinput
