@@ -6,23 +6,8 @@ from django.db import OperationalError
 
 
 def home(request):
-    """Home page view"""
-    try:
-        featured_projects = Project.objects.all().order_by('-created_at')
-        skills = Skill.objects.all()
-        about = About.objects.first()
-    except (OperationalError, About.DoesNotExist):
-        # Database tables may not exist yet or no data
-        featured_projects = []
-        skills = []
-        about = None
-    
-    context = {
-        'featured_projects': featured_projects,
-        'skills': skills,
-        'about': about,
-    }
-    return render(request, 'portfolio/home.html', context)
+    """Serve React frontend (SPA)"""
+    return render(request, 'portfolio/react_app.html')
 
 
 class ProjectListView(ListView):
