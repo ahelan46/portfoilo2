@@ -14,8 +14,13 @@ services:
       - key: PYTHONUNBUFFERED
         value: '1'
     postDeploy:
-      - command: cd portfolio && python manage.py migrate
+      - command: cd portfolio && python manage.py migrate --noinput
       - command: cd portfolio && python manage.py collectstatic --noinput
+      - command: cd portfolio && python seed_about.py || true
+      - command: cd portfolio && python seed_certifications.py || true
+      - command: cd portfolio && python seed_cta.py || true
+      - command: cd portfolio && python seed_experience.py || true
+      - command: cd portfolio && python seed_journey.py || true
 
 # If you want a managed Postgres service, create it via Render UI and attach its
 # `DATABASE_URL` to this service (Render will set the env var automatically).
