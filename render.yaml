@@ -16,3 +16,7 @@ services:
     postDeploy:
       - command: cd portfolio && DJANGO_SETTINGS_MODULE=mysite.settings_prod python manage.py migrate --noinput
       - command: cd portfolio && DJANGO_SETTINGS_MODULE=mysite.settings_prod python manage.py collectstatic --noinput
+      - command: cd portfolio && DJANGO_SETTINGS_MODULE=mysite.settings_prod python seed_about.py
+      - command: cd portfolio && DJANGO_SETTINGS_MODULE=mysite.settings_prod python seed_experience.py
+      - command: cd portfolio && DJANGO_SETTINGS_MODULE=mysite.settings_prod python seed_cta.py
+      - command: cd portfolio && DJANGO_SETTINGS_MODULE=mysite.settings_prod python seed_certifications.py
