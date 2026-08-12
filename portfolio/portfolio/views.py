@@ -2,16 +2,19 @@ from django.contrib import messages
 from django.shortcuts import render,redirect
 from django.views.generic import ListView, DetailView
 from .models import Project, Skill, About
+from django.db import OperationalError
 
 
 def home(request):
     """Home page view"""
-    featured_projects = Project.objects.all().order_by('-created_at')
-    skills = Skill.objects.all()
-    
     try:
+        featured_projects = Project.objects.all().order_by('-created_at')
+        skills = Skill.objects.all()
         about = About.objects.first()
-    except About.DoesNotExist:
+    except (OperationalError, About.DoesNotExist):
+        # Database tables may not exist yet or no data
+        featured_projects = []
+        skills = []
         about = None
     
     context = {
